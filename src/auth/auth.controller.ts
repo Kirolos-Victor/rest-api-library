@@ -1,5 +1,4 @@
-import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
-import { UserService } from '../user/user.service';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { loginDto } from './dto/login.dto';
 import { registerDto } from './dto/register.dto';
@@ -13,11 +12,11 @@ export class AuthController {
     @Body()
     user: loginDto,
   ) {
-    const userData = await this.authService.validateUser(
+    const validatedUser = await this.authService.validateUser(
       user.email,
       user.password,
     );
-    return this.authService.login(userData);
+    return this.authService.signToken(validatedUser);
   }
 
   @Post('register')
