@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 import { Match } from '../../common/password-match.decorator';
 
 export class registerDto {
@@ -7,6 +7,7 @@ export class registerDto {
   username: string;
   @IsNotEmpty()
   @IsString()
+  @MinLength(6)
   password: string;
   @IsNotEmpty()
   @IsString()
