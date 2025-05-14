@@ -6,19 +6,24 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create.dto';
 import { Book } from './book.schema';
 import { UpdateBookDto } from './dto/update.dto';
+import { Query as queryExpress } from 'express-serve-static-core';
 
 @Controller('books')
 export class BookController {
   constructor(private readonly bookService: BookService) {}
 
   @Get()
-  async findAll() {
-    return this.bookService.findAll();
+  async findAll(
+    @Query()
+    query: queryExpress,
+  ) {
+    return this.bookService.findAll(query);
   }
 
   @Get(':id')

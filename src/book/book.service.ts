@@ -7,8 +7,31 @@ import { Book } from './book.schema';
 export class BookService {
   constructor(@InjectModel('Book') private readonly bookModel: Model<Book>) {}
 
-  async findAll(): Promise<Book[]> {
-    return this.bookModel.find().exec();
+  async findAll(query: {
+    page?: number;
+    limit?: number;
+    search?: string;
+  }): Promise<{ data: Book[]; total: number; page: number; limit: number }> {
+    const page = query.page && query.page > 0 ? query.page : 1;
+    const limit = query.limit && query.limit > 0 ? query.limit : 10;
+    const skip = (page - 1) * limit;
+
+    let filter = {};
+    if (query.search) {
+      filter = { title: { $regex: query.search, $options: 'i' } };
+    }
+
+    const [data, total] = await Promise.all([
+      this.bookModel.find(filter).skip(skip).limit(limit).exec(),
+      this.bookModel.countDocuments(filter),
+    ]);
+
+    return {
+      data,
+      total,
+      page,
+      limit,
+    };
   }
 
   async findOne(id: string): Promise<Book> {
