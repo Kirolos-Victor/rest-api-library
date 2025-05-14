@@ -27,7 +27,7 @@ export class AuthService {
   async register(user: User): Promise<User> {
     const existingUser = await this.userService.findOneByEmail(user.email);
     if (existingUser) {
-      throw new UnauthorizedException('User already exists');
+      throw new UnauthorizedException('Email already exists');
     }
 
     user.password = await bcrypt.hash(user.password, 10);
@@ -35,7 +35,7 @@ export class AuthService {
     return this.userService.create(user);
   }
 
-  login(user: User) {
+  signToken(user: User) {
     const payload = { email: user.email, user: user.username };
     return {
       access_token: this.jwtService.sign(payload),
