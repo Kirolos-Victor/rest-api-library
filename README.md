@@ -1,7 +1,8 @@
 ```markdown
 # Rest API Library
 
-A RESTful API built using the NestJS framework, designed for efficient and scalable server-side applications. This project includes user authentication, registration, and token-based authorization.
+A RESTful API built using the NestJS framework, designed for efficient and scalable server-side applications. This
+project includes user authentication, registration, and token-based authorization.
 
 ## Features
 
@@ -9,6 +10,8 @@ A RESTful API built using the NestJS framework, designed for efficient and scala
 - JWT-based authentication and token verification.
 - MongoDB integration using Mongoose.
 - Input validation with `class-validator`.
+- Custom `JwtAuthGuard` for route protection.
+- Public route decorator for bypassing authentication.
 
 ## Prerequisites
 
@@ -76,13 +79,19 @@ A RESTful API built using the NestJS framework, designed for efficient and scala
 
 ## Project Structure
 
-- `src/auth`: Authentication module (services, controllers, DTOs).
+- `src/auth`: Authentication module (guards, strategies, services, controllers, DTOs).
+    - `jwt.auth.guard.ts`: Custom guard for JWT-based route protection.
+    - `jwt.strategy.ts`: JWT strategy for token validation.
+- `src/decorators`: Custom decorators (e.g., `Public` for marking routes as public).
 - `src/user`: User module (services, controllers, DTOs).
 - `src/book`: Book module (services, controllers, DTOs).
+- `src/decorators`: Shared utilities and decorators.
 
-- `src/common`: Shared utilities and decorators.
-- `.env`: Environment variables configuration.
+## Environment Variables
 
+- `DB_URI`: MongoDB connection string.
+- `JWT_SECRET`: Secret key for signing JWTs.
+- `JWT_EXPIRES_IN`: Expiration time for JWTs (e.g., `1h`, `30m`).
 
 ## License
 
