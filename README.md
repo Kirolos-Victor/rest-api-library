@@ -85,7 +85,6 @@ project includes user authentication, registration, and token-based authorizatio
 - `src/decorators`: Custom decorators (e.g., `Public` for marking routes as public).
 - `src/user`: User module (services, controllers, DTOs).
 - `src/book`: Book module (services, controllers, DTOs).
-- `src/decorators`: Shared utilities and decorators.
 
 ## Environment Variables
 
@@ -96,4 +95,5 @@ project includes user authentication, registration, and token-based authorizatio
 ## License
 
 This project is licensed under the MIT License.
+
 ```
